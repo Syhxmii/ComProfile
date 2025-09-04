@@ -13,9 +13,9 @@ jobs:
       contents: write
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-    env: 
-      VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+    env:
       VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,8 +29,8 @@ jobs:
 
       - name: Debug env variables
         run: |
-          echo "Anon key length: ${#VITE_SUPABASE_ANON_KEY}"
           echo "Supabase URL: $VITE_SUPABASE_URL"
+          echo "Anon key length: ${#VITE_SUPABASE_ANON_KEY}"
 
       - name: Build Project
         run: npm run build
