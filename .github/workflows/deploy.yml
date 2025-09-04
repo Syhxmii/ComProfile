@@ -13,6 +13,9 @@ jobs:
       contents: write
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
+    env: 
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
     steps:
       - uses: actions/checkout@v4
 
@@ -24,11 +27,13 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Debug env variables
+        run: |
+          echo "Anon key length: ${#VITE_SUPABASE_ANON_KEY}"
+          echo "Supabase URL: $VITE_SUPABASE_URL"
+
       - name: Build Project
         run: npm run build
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
